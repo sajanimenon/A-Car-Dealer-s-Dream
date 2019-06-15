@@ -43,9 +43,15 @@ def index1():
 
 @app.route("/Map")
 def index2():
-    """Return the homepage."""
+    """Return the Map Page."""
     return render_template("Map.html") 
     app.add_url_rule('/', 'index2', index2)  
+
+@app.route("/Contact")
+def Contact():
+    """Return the Contact Page."""
+    return render_template("Contact.html") 
+    app.add_url_rule('/', 'Contact', Contact)  
 
 # Route for testing the data 
 @app.route("/test")
