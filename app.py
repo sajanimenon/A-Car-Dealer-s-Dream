@@ -8,11 +8,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
-
-
-
 from sqlalchemy.sql import func
-
 
 app = Flask(__name__)
 
@@ -28,32 +24,34 @@ Base.prepare(db.engine, reflect=True)
 # Creating an easier reference
 Leads_table = Base.classes.leads_table
 
-# Home route 
+# Routes
+
+# Home page
 @app.route("/")
 def index():
     """Return the homepage."""
     return render_template("index.html")
     app.add_url_rule('/', 'index', index)
 
-@app.route("/Charts")
+# Charts only page
+@app.route("/charts")
 def index1():
-    """Return the homepage."""
-    return render_template("Chart.html") 
-    app.add_url_rule('/', 'index1', index1)     
+    return render_template("chart.html")
+    app.add_url_rule('/', 'index1', index1)
 
-@app.route("/Map")
+# Map only page
+@app.route("/map")
 def index2():
-    """Return the Map Page."""
-    return render_template("Map.html") 
-    app.add_url_rule('/', 'index2', index2)  
+    return render_template("map.html")
+    app.add_url_rule('/', 'index2', index2)
 
-@app.route("/Contact")
-def Contact():
-    """Return the Contact Page."""
-    return render_template("Contact.html") 
-    app.add_url_rule('/', 'Contact', Contact)  
+# Client Area with purchased leads available
+@app.route("/client-area")
+def clientArea():
+    return render_template("client-area.html")
+    app.add_url_rule('/', 'clientArea', clientArea)
 
-# Route for testing the data 
+# Route for testing the data
 @app.route("/test")
 def test_func():
     stmt = db.session.query(Leads_table).statement
@@ -86,14 +84,16 @@ def get_data():
     #     limit(500).all()
 
     # Query all the records
-    results = db.session.query(*sel).all()         
+    results = db.session.query(*sel).all()
 
     # Creating Pandas dataframe
-    df = pd.DataFrame(results, columns=["ConsumerID", "Zip", "Audience_Count", "City", "State", "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
+    df = pd.DataFrame(results, columns=["ConsumerID", "Zip", "Audience_Count", "City", "State",
+                                        "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
 
     # Return results in JSON format for the interwebz
     return jsonify(df.to_dict(orient="records"))
 
+# Client data route
 @app.route("/data/nj")
 def get_data_by_state():
 
@@ -115,41 +115,43 @@ def get_data_by_state():
 
     results_by_state = db.session.query(*sel).\
         filter(Leads_table.State == "NJ").\
-        all()           
+        all()
 
     # Creating Pandas dataframe
-    df_by_state = pd.DataFrame(results_by_state, columns=["ConsumerID", "Zip", "Audience_Count", "City", "State", "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
+    df_by_state = pd.DataFrame(results_by_state, columns=["ConsumerID", "Zip", "Audience_Count", "City",
+                                                          "State", "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
 
     # Return results in JSON format for the interwebz
     return jsonify(df_by_state.to_dict(orient="records"))
 
-@app.route("/Charts/AgeBin")
+
+@app.route("/charts/age")
 def AgeBin_data():
     """Return Age Bin and Audience Count"""
-
-    # Query for Audience Count by Age Bin
-    sel = [Leads_table.AGEBIN,func.count(Leads_table.ConsumerID)]
+    # Query for Audience Count by Age
+    sel = [Leads_table.AGEBIN, func.count(Leads_table.ConsumerID)]
     results = db.session.query(*sel).\
         group_by(Leads_table.AGEBIN).all()
     df = pd.DataFrame(results, columns=['AgeBin', 'AudienceCount'])
     return jsonify(df.to_dict(orient="records"))
 
-@app.route("/Charts/Gender")
+
+@app.route("/charts/gender")
 def Gender_data():
     """Return Gender and Audience Count"""
-
-    # Query for Audience Count by Age Bin
-    sel = [Leads_table.Gender,func.count(Leads_table.ConsumerID)]
+    # Query for Audience Count by Gender
+    sel = [Leads_table.Gender, func.count(Leads_table.ConsumerID)]
     results = db.session.query(*sel).\
         group_by(Leads_table.Gender).all()
     df1 = pd.DataFrame(results, columns=['Gender', 'AudienceCount'])
     return jsonify(df1.to_dict(orient="records"))
 
-@app.route("/Charts/CreditScore")
+
+@app.route("/charts/credit-score")
 def CreditScore_data():
     """Return Credit Score and Audience Count"""
    # Query for Audience Count by Credit Score
-    sel = [Leads_table.CreditScore,func.count(Leads_table.ConsumerID)]
+    sel = [Leads_table.CreditScore, func.count(Leads_table.ConsumerID)]
     results = db.session.query(*sel).\
         group_by(Leads_table.CreditScore).all()
     df2 = pd.DataFrame(results, columns=['CreditScore', 'AudienceCount'])
@@ -157,16 +159,30 @@ def CreditScore_data():
     data = {
         "x": df2["CreditScore"].values.tolist(),
         "y": df2["AudienceCount"].values.tolist(),
-        "type": "bar"
+        "type": "bar",
+        "textfont": {
+            "family": "\"Noto Sans SC\", sans-serif",
+            "color": "#F2F2F2"
+        },
+        "hoverlabel": {
+            "bgcolor": "#393E40",
+            "font": {
+                "family": "\"Noto Sans SC\", sans-serif",
+                "color": "#F2F2F2"
+            }
+        },
+        "marker": {
+            "color": "#5A8C7A"
+        }
     }
     return jsonify(data)
-           
 
-@app.route("/Charts/Household_Income")
+
+@app.route("/charts/household-income")
 def Household_Income_data():
     """Return Household_Income and Audience Count"""
     # Query for Audience Count by Credit Score
-    sel = [Leads_table.Household_Income,func.count(Leads_table.ConsumerID)]
+    sel = [Leads_table.Household_Income, func.count(Leads_table.ConsumerID)]
     results = db.session.query(*sel).\
         group_by(Leads_table.Household_Income).all()
     df3 = pd.DataFrame(results, columns=['Household_Income', 'AudienceCount'])
@@ -174,12 +190,24 @@ def Household_Income_data():
     data = {
         "x": df3["Household_Income"].values.tolist(),
         "y": df3["AudienceCount"].values.tolist(),
-        "type": "bar"
+        "type": "bar",
+        "textfont": {
+            "family": "\"Noto Sans SC\", sans-serif",
+            "color": "#F2F2F2"
+        },
+        "hoverlabel": {
+            "bgcolor": "#393E40",
+            "font": {
+                "family": "\"Noto Sans SC\", sans-serif",
+                "color": "#F2F2F2"
+            }
+        },
+        "marker": {
+            "color": "#5A8C7A"
+        }
     }
     return jsonify(data)
 
 
-
-
 if __name__ == "__main__":
-    app.run()    
+    app.run()
