@@ -1,35 +1,145 @@
-.hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), center center no-repeat url(../../static/images/miwhip-1473251-unsplash.jpg);
-    background-size: cover;
+/* Foundation Docs @ https://foundation.zurb.com/sites/docs/ */
+
+/* Color Theme Swatches in Hex */
+dealership-loads-1 {
+  color: #393e40;
+}
+dealership-loads-2 {
+  color: #687273;
+}
+dealership-loads-3 {
+  color: #5a8c7a;
+}
+dealership-loads-4 {
+  color: #f2f2f2;
+}
+dealership-loads-5 {
+  color: #0d0d0d;
 }
 
-.hero h1 {
-    color: white;
+body {
+  color: #0d0d0d;
+  background-color: white;
+  font-family: "Noto Sans SC", sans-serif;
 }
 
-.hero h2 {
-    color: #eee;
+/* Navigation */
+.top-bar {
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
-.box {
-    height: 400px;
-    padding: 20px;
-    color: #fff;
-    background: deepskyblue;
-  }
+.top-bar .menu-text {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+}
 
-  body {
-    padding: 0;
-    margin: 0;
-  }
-  
-  #map,
-  body,
-  html {
-    height: 100%;
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
+.top-bar,
+.top-bar ul {
+  background-color: #393e40;
+  color: #f2f2f2;
+}
+
+.top-bar ul a {
+  color: #f2f2f2;
+}
+.top-bar ul a:hover,
+.top-bar ul a:focus {
+  color: #5a8c7a;
+}
+
+h1 {
+  line-height: 1;
+}
+
+#banner {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+/* For all headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+}
+
+.button {
+  background-color: #5a8c7a;
+  color: #f2f2f2;
+}
+.button:hover,
+.button:focus {
+  background-color: #393e40;
+  color: #f2f2f2;
+}
+
+/* Overriding plotly's default fonts */
+text,
+.js-plotly-plot .plotly,
+.js-plotly-plot .plotly div {
+  font-family: "Noto Sans SC", sans-serif !important;
+  font-size: inherit;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+#ageChart,
+#genderChart {
+  min-height: 400px;
+}
+
+/* Responsive band-aid for charts - requires page reload on resize */
+.svg-container {
+  margin: 0 auto;
+}
+
+#map {
+  min-height: 500px;
+  width: 100%;
+}
+
+footer {
+  background-color: #0d0d0d;
+  color: #687273;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+footer ul {
+  list-style-type: none;
+}
+
+footer a {
+  color: #5a8c7a;
+}
+footer a:hover,
+footer a:focus {
+  color: #f2f2f2;
+}
+
+/* Responsive Breakpoints aka Media Queries */
+
+/* Small only */
+@media screen and (max-width: 39.9375em) {
+}
+
+/* Medium and up */
+@media screen and (min-width: 40em) {
+}
+
+/* Medium only */
+@media screen and (min-width: 40em) and (max-width: 63.9375em) {
+}
+
+/* Large and up */
+@media screen and (min-width: 64em) {
+}
+
+/* Large only */
+@media screen and (min-width: 64em) and (max-width: 74.9375em) {
+}
