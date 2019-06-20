@@ -8,7 +8,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
+
+
+
 from sqlalchemy.sql import func
+
 
 app = Flask(__name__)
 
@@ -24,34 +28,39 @@ Base.prepare(db.engine, reflect=True)
 # Creating an easier reference
 Leads_table = Base.classes.leads_table
 
-# Routes
-
-# Home page
+# Home route 
 @app.route("/")
 def index():
     """Return the homepage."""
     return render_template("index.html")
     app.add_url_rule('/', 'index', index)
 
-# Charts only page
-@app.route("/charts")
+@app.route("/Charts")
 def index1():
-    return render_template("chart.html")
-    app.add_url_rule('/', 'index1', index1)
+    """Return the homepage."""
+    return render_template("Chart.html") 
+    app.add_url_rule('/', 'index1', index1)     
 
-# Map only page
-@app.route("/map")
+@app.route("/Map")
 def index2():
-    return render_template("map.html")
-    app.add_url_rule('/', 'index2', index2)
+    """Return the homepage."""
+    return render_template("Map.html") 
+    app.add_url_rule('/', 'index2', index2)  
+
 
 # Client Area with purchased leads available
 @app.route("/client-area")
 def clientArea():
     return render_template("client-area.html")
-    app.add_url_rule('/', 'clientArea', clientArea)
+    app.add_url_rule('/', 'clientArea', clientArea)  
 
-# Route for testing the data
+@app.route("/purchase")
+def purchase():
+    """Return the purchase page."""
+    return render_template("Purchase.html") 
+    app.add_url_rule('/', 'purchase', purchase)      
+
+# Route for testing the data 
 @app.route("/test")
 def test_func():
     stmt = db.session.query(Leads_table).statement
@@ -84,16 +93,14 @@ def get_data():
     #     limit(500).all()
 
     # Query all the records
-    results = db.session.query(*sel).all()
+    results = db.session.query(*sel).all()         
 
     # Creating Pandas dataframe
-    df = pd.DataFrame(results, columns=["ConsumerID", "Zip", "Audience_Count", "City", "State",
-                                        "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
+    df = pd.DataFrame(results, columns=["ConsumerID", "Zip", "Audience_Count", "City", "State", "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
 
     # Return results in JSON format for the interwebz
     return jsonify(df.to_dict(orient="records"))
 
-# Client data route
 @app.route("/data/nj")
 def get_data_by_state():
 
@@ -115,15 +122,13 @@ def get_data_by_state():
 
     results_by_state = db.session.query(*sel).\
         filter(Leads_table.State == "NJ").\
-        all()
+        all()           
 
     # Creating Pandas dataframe
-    df_by_state = pd.DataFrame(results_by_state, columns=["ConsumerID", "Zip", "Audience_Count", "City",
-                                                          "State", "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
+    df_by_state = pd.DataFrame(results_by_state, columns=["ConsumerID", "Zip", "Audience_Count", "City", "State", "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
 
     # Return results in JSON format for the interwebz
     return jsonify(df_by_state.to_dict(orient="records"))
-
 
 @app.route("/charts/age")
 def AgeBin_data():
