@@ -126,7 +126,7 @@ def get_data_by_state():
 
     # Creating Pandas dataframe
     df_by_state = pd.DataFrame(results_by_state, columns=["ConsumerID", "Zip", "Audience_Count", "City", "State", "Gender", "Age", "MaritalStatus", "EthnicGroup", "CreditScore", "Kids", "Email_Address"])
-
+    #print(df_by_state)
     # Return results in JSON format for the interwebz
     return jsonify(df_by_state.to_dict(orient="records"))
 
