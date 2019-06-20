@@ -40,6 +40,7 @@ Take data from available CSV file and review the parameters
 
 Clean Data
 Used jupyter notebook to read CSV, clean the data and load to a SQLite database
+Struggled to get the leading zeroes in for Zipcode
 
 
 Visualization
@@ -49,13 +50,13 @@ To answer the following questions reading from SQLite database to answer the fol
 
 Demographic Insights
 
-1. How many people are interested in purchasing the vehicle in your area? (Heat Map, gauge with number of leads)
-2. Gender Composition, Age composition of the database
+1. By Age 
+2. By Gender
 
 Financial Insights
 
 3. Financial Stability analysis of the credit scores of the possible customers
-4. Audience Count by Household incomes
+4. Audience Count by Household income
 
 Audience Spread
 
