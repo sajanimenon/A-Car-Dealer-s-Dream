@@ -88,10 +88,17 @@
                 placeholder="(732) 549-6606"
               />
             </div>
-            <button type="submit" class="button large expanded" id="buy-button">
-              Submit Request to be contacted by a representative.
-            </button>
-          </form>
+            <!-- <button type="submit" class="button large expanded" id="buy-button"> -->
+           
+            <input type="submit" class="button large expanded" value= "Submit" onclick="window.open('http://127.0.0.1:5000/thankyou')" />  
+            <!--<button onclick = "confirmation()">Submit</button> -->
+            <!-- <script> -->
+            <!-- function confirmation() { -->
+            <!--   alert("A CoolCable representative will reach out to you shortly."); -->
+            <!-- } -->         
+            <!-- </script> -->
+
+            </form>
         </section>
       </div>
     </div>
@@ -124,7 +131,9 @@
       crossorigin=""
     ></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-    
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/logic.js') }}"></script>
     <script>
       $(document).foundation();
     </script>

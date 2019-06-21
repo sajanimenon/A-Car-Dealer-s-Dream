@@ -60,6 +60,12 @@ def purchase():
     return render_template("Purchase.html") 
     app.add_url_rule('/', 'purchase', purchase)      
 
+@app.route("/thankyou")
+def thankyou():
+    """Return the purchase page."""
+    return render_template("Thankyou.html") 
+    app.add_url_rule('/', 'thankyou', thankyou)   
+
 # Route for testing the data 
 @app.route("/test")
 def test_func():
