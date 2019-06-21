@@ -46,18 +46,16 @@ Web Design and Architecture
 
 ![End Goal](https://github.com/sajanimenon/A-Car-Dealer-s-Dream/blob/master/static/images/web_flow.JPG)
 
-What
+What? => 
 Create a web app whereby we can sell valuable user data to dealerships. 
 
-Why
+Why? =>
 We have an ever growing and updated database of potential clients, what cars they current own and other useful demographics. 
 
-How
+How? =>
 Presenting charts and supporting content to show potential dealerships sneak peaks into the data we have, we'll entice them to purchase the relevant data for their dealership.
 
 We use different tools from front ent Development in order to achieve the goal. Such as: HTML, CSS, D3, Foundation, JavaScript.
-
-
 
 
 Visualization
