@@ -112,6 +112,8 @@ function houseHoldChart() {
     Plotly.plot("householdIncomeChart", data, layout);
   });
 }
+
+
 // Build all the charts
 ageChart();
 genderChart();
